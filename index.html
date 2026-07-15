@@ -1,25 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INSPARKS — Learn Japanese, level by level</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main class="game-container">
-        <header class="status-bar">
-            <div id="score">Score: 0</div>
-            <div id="timer">Time: 30s</div>
-        </header>
 
-        <section class="display-area">
-            <h1 id="kanji-display">字</h1>
-        </section>
+<!-- ============================================================
+     LANDING (marketing page) — this whole block hides on
+     "Get Started" click, per your existing main.js logic.
+     Anything wrapped in a dashed box is a placeholder —
+     swap it for your own copy.
+     ============================================================ -->
+<div id="landing">
 
-        <section class="input-area">
-            <input type="text" id="user-input" placeholder="Enter meaning...">
-            <button id="submit-btn">Submit</button>
-        </section>
-    </main>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="wrap">
+      <div class="logo"><span class="mark">語</span> <span class="placeholder">INSPARKS</span></div>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#community">Community</a>
+        <a href="#levels">Levels</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="nav-cta">
+        <button class="btn btn-primary get-started-btn" id="get-started-btn">Get Started</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">JLPT N5 → N1</div>
+      <h1><span class="placeholder">[HERO HEADLINE — e.g. "Learn Japanese the way that actually <span class="accent-word">sticks</span>."]</span></h1>
+      <p class="subhead"><span class="placeholder">[SUBHEAD — one or two sentences on how the game teaches kanji &amp; vocab, adapts to weak spots, and tracks progress across JLPT levels.]</span></p>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-lg get-started-btn">Start learning free</button>
+        <a href="#features" class="btn btn-ghost btn-lg">See how it works</a>
+      </div>
+      <p class="social-proof">Loved by <strong><span class="placeholder">[X]+</span></strong> learners in our community</p>
+    </div>
+  </section>
+
+  <!-- STAT STRIP -->
+  <section class="stat-strip reveal">
+    <div class="wrap">
+      <div class="stat">
+        <div class="num">2,000+</div>
+        <div class="label">Kanji &amp; vocab cards</div>
+      </div>
+      <div class="stat">
+        <div class="num">N5–N1</div>
+        <div class="label">Full JLPT coverage</div>
+      </div>
+      <div class="stat">
+        <div class="num placeholder">[X]+</div>
+        <div class="label">Active learners</div>
+      </div>
+      <div class="stat">
+        <div class="num">800+</div>
+        <div class="label">Discord community</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRESS SHOWCASE (equivalent of crackd's score-improvement cards) -->
+  <section class="progress-showcase">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Where learners go from <em>stuck</em> to <em>fluent</em>.</h2>
+        <p class="placeholder">[Framing line about real progress — swap for your own copy]</p>
+      </div>
+      <div class="marquee reveal">
+        <div class="progress-card">
+          <div class="delta">+420</div>
+          <div class="range">N5 → N2 vocab · 3 months</div>
+          <div class="quote placeholder">"[Placeholder testimonial quote — replace with your own or real learner feedback]"</div>
+          <div class="who"><div class="avatar"></div> <span class="placeholder">[name]</span></div>
+        </div>
+        <div class="progress-card">
+          <div class="delta">+180</div>
+          <div class="range">Kanji mastered · 6 weeks</div>
+          <div class="quote placeholder">"[Placeholder testimonial quote]"</div>
+          <div class="who"><div class="avatar"></div> <span class="placeholder">[name]</span></div>
+        </div>
+        <div class="progress-card">
+          <div class="delta">32-day</div>
+          <div class="range">Study streak</div>
+          <div class="quote placeholder">"[Placeholder testimonial quote]"</div>
+          <div class="who"><div class="avatar"></div> <span class="placeholder">[name]</span></div>
+        </div>
+        <div class="progress-card">
+          <div class="delta">N3 → N1</div>
+          <div class="range">In one year</div>
+          <div class="quote placeholder">"[Placeholder testimonial quote]"</div>
+          <div class="who"><div class="avatar"></div> <span class="placeholder">[name]</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Everything you need, in one place.</h2>
+        <p class="placeholder">[Section framing — swap for your own copy]</p>
+      </div>
+      <div class="feature-grid reveal">
+        <div class="feature-card wide">
+          <div class="icon-badge">🈶</div>
+          <h3>Kanji &amp; vocab decks, by JLPT level</h3>
+          <p>Structured N5 through N1 decks pulled straight from your own kanji/vocab data — no filler, every card earns its place.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon-badge">🎯</div>
+          <h3>Adapts to weak spots</h3>
+          <p>Cards you miss come back more often. The deck reshapes itself around what you actually need to drill.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon-badge">🔥</div>
+          <h3>Streaks that mean something</h3>
+          <p>Daily streaks and XP tied to real recall, not just logins.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon-badge">📊</div>
+          <h3>See every weak spot</h3>
+          <p>Per-level analytics break down exactly which kanji, readings, or vocab groups are costing you the most.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon-badge">🔁</div>
+          <h3>Never miss the same word twice</h3>
+          <p>Missed cards land in a review deck that resurfaces them until they actually stick.</p>
+        </div>
+        <div class="feature-card wide placeholder">
+          <div class="icon-badge">🏯</div>
+          <h3>[Another feature — your game's signature mechanic]</h3>
+          <p>[Description]</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMUNITY -->
+  <section class="community" id="community">
+    <div class="wrap">
+      <div class="community-grid">
+        <div class="community-copy reveal">
+          <div class="eyebrow">Community</div>
+          <h2>Learning Japanese is easier with people doing it alongside you.</h2>
+          <p class="placeholder">[Copy about your Discord community — study alongside other learners, ask questions, share progress]</p>
+          <div class="community-stats">
+            <div><div class="num">800+</div><div class="label">Members</div></div>
+            <div><div class="num">24/7</div><div class="label">Active chat</div></div>
+          </div>
+        </div>
+        <div class="mock-window reveal">
+          <div class="mock-header"><span><span class="live-dot"></span>#kanji-practice</span><span class="placeholder">[X] online</span></div>
+          <div class="mock-body">
+            <div class="chat-msg">
+              <div class="avatar"></div>
+              <div class="bubble">
+                <div class="name placeholder">[user] <span>2:14 PM</span></div>
+                <div class="text placeholder">[placeholder message — e.g. anyone else stuck on N3 readings?]</div>
+              </div>
+            </div>
+            <div class="chat-msg">
+              <div class="avatar"></div>
+              <div class="bubble">
+                <div class="name placeholder">[user] <span>2:15 PM</span></div>
+                <div class="text placeholder">[placeholder reply]</div>
+              </div>
+            </div>
+            <div class="chat-msg">
+              <div class="avatar"></div>
+              <div class="bubble">
+                <div class="name placeholder">[user] <span>2:18 PM</span></div>
+                <div class="text placeholder">[placeholder message — e.g. finally cleared my N4 deck 🎉]</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEVELS (progression tiers — replaces crackd's pricing) -->
+  <section class="levels" id="levels">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Five levels. One path to fluency.</h2>
+        <p>Each JLPT level unlocks its own kanji, vocab, and review decks.</p>
+      </div>
+      <div class="level-grid reveal">
+        <div class="level-card">
+          <div class="badge">N5</div>
+          <h4>Beginner</h4>
+          <p class="placeholder">[X] kanji · [X] vocab</p>
+        </div>
+        <div class="level-card">
+          <div class="badge">N4</div>
+          <h4>Elementary</h4>
+          <p class="placeholder">[X] kanji · [X] vocab</p>
+        </div>
+        <div class="level-card">
+          <div class="badge">N3</div>
+          <h4>Intermediate</h4>
+          <p class="placeholder">[X] kanji · [X] vocab</p>
+        </div>
+        <div class="level-card">
+          <div class="badge">N2</div>
+          <h4>Upper-intermediate</h4>
+          <p class="placeholder">[X] kanji · [X] vocab</p>
+        </div>
+        <div class="level-card">
+          <div class="badge">N1</div>
+          <h4>Advanced</h4>
+          <p class="placeholder">[X] kanji · [X] vocab</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>FAQ</h2>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item open">
+          <button class="faq-question">How does the game decide what to show me? <span class="icon">+</span></button>
+          <div class="faq-answer"><p class="placeholder">[Answer — explain your adaptive/spaced-repetition logic]</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Do I need to know hiragana/katakana first? <span class="icon">+</span></button>
+          <div class="faq-answer"><p class="placeholder">[Answer]</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Is this free? <span class="icon">+</span></button>
+          <div class="faq-answer"><p class="placeholder">[Answer]</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">How do I join the community? <span class="icon">+</span></button>
+          <div class="faq-answer"><p class="placeholder">[Answer — link your Discord]</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta reveal">
+    <div class="wrap">
+      <h2 class="placeholder">[Final CTA headline]</h2>
+      <button class="btn btn-primary btn-lg get-started-btn">Get started free</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <div class="logo placeholder">INSPARKS</div>
+          <p class="placeholder">[Tagline]</p>
+        </div>
+        <div class="footer-col">
+          <h5>Platform</h5>
+          <a href="#features">Features</a>
+          <a href="#levels">Levels</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <div class="footer-col">
+          <h5>Community</h5>
+          <a href="#">Discord</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="placeholder">© 2026 INSPARKS. All rights reserved.</span>
+        <span>Not affiliated with the Japan Foundation or JLPT.</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ============================================================
+     LEVEL SELECT — merge with whatever you already have here.
+     Kept minimal so it doesn't clash with your existing markup.
+     ============================================================ -->
+<div id="levelSelect" style="display:none;">
+  <div class="wrap" style="padding: 60px 24px; text-align:center;">
+    <h2 style="font-family:var(--font-display); margin-bottom: 30px;">Choose your level</h2>
+    <div class="level-grid" style="max-width:700px; margin:0 auto;">
+      <div class="level-card" style="cursor:pointer;" onclick="loadGame('N5')"><div class="badge">N5</div><h4>Beginner</h4></div>
+      <div class="level-card" style="cursor:pointer;" onclick="loadGame('N4')"><div class="badge">N4</div><h4>Elementary</h4></div>
+      <div class="level-card" style="cursor:pointer;" onclick="loadGame('N3')"><div class="badge">N3</div><h4>Intermediate</h4></div>
+      <div class="level-card" style="cursor:pointer;" onclick="loadGame('N2')"><div class="badge">N2</div><h4>Upper-int.</h4></div>
+      <div class="level-card" style="cursor:pointer;" onclick="loadGame('N1')"><div class="badge">N1</div><h4>Advanced</h4></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     GAME UI — your actual kanji/vocab practice screen goes here
+     ============================================================ -->
+<div id="gameUI" style="display:none;">
+  <div class="wrap" style="padding: 60px 24px;">
+    <p style="color:var(--text-secondary);">[Game UI placeholder — your fetch/practice logic renders here]</p>
+  </div>
+</div>
+
+<script src="main.js"></script>
 </body>
 </html>
-       
-
