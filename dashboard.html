@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INSPARKS — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="dashboard-body">
+
+<div class="app-shell">
+
+  <!-- ============================================================
+       SIDEBAR
+       ============================================================ -->
+  <aside class="sidebar">
+    <div class="sidebar-logo"><span class="mark">語</span> <span class="placeholder">INSPARKS</span></div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-item active" href="#"><span class="nav-icon">🏠</span> Home</a>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Learn</div>
+        <a class="nav-item" href="#"><span class="nav-icon">📦</span> Modules</a>
+        <a class="nav-item" href="#"><span class="nav-icon">文</span> Grammar</a>
+        <a class="nav-item" href="vocab.html"><span class="nav-icon">言</span> Vocab</a>
+        <a class="nav-item" href="vocab.html"><span class="nav-icon">字</span> Kanji</a>
+        <a class="nav-item" href="#"><span class="nav-icon">📖</span> Reading</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Practice</div>
+        <a class="nav-item" href="#"><span class="nav-icon">📝</span> Mocks</a>
+        <a class="nav-item" href="#"><span class="nav-icon">🔁</span> Review</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Progress</div>
+        <a class="nav-item" href="#"><span class="nav-icon">📊</span> Stats</a>
+        <a class="nav-item" href="#"><span class="nav-icon">📈</span> Tracker</a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="avatar"></div>
+        <div>
+          <div class="user-name placeholder">[USERNAME]</div>
+          <div class="user-plan">Free</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============================================================
+       MAIN
+       ============================================================ -->
+  <main class="dashboard-main">
+
+    <div class="top-row">
+      <div class="stat-card">
+        <div class="stat-card-head"><h3>Daily Goal</h3><span class="stat-card-icon">🏆</span></div>
+        <div class="stat-card-body">
+          <div class="progress-ring">
+            <svg viewBox="0 0 100 100">
+              <circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+              <circle class="ring-fg" id="daily-goal-ring" cx="50" cy="50" r="42"></circle>
+            </svg>
+            <div class="ring-label">
+              <span class="ring-num" id="daily-goal-num">0</span>
+              <span class="ring-total">/15</span>
+            </div>
+          </div>
+          <div class="stat-card-desc">Cards reviewed today</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-head"><h3>Mistakes</h3></div>
+        <div class="stat-card-body row">
+          <span class="mistake-icon">🗑️</span>
+          <div class="mistake-num">0<span>/10</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         GAME LAUNCHER — shoji-paper panel (warm/light contrast)
+         Replaces crackd's "Study Plan" section.
+         ============================================================ -->
+    <section class="game-launcher">
+      <div class="shoji-bg" aria-hidden="true"></div>
+
+      <div class="launcher-content">
+        <button class="launcher-node node-tl" id="previous-games-btn">
+          <span class="node-icon">↺</span>
+          <span class="node-kanji">続き</span>
+          <span class="node-label">Previous Games</span>
+        </button>
+
+        <button class="launcher-node node-tr" id="highscore-btn">
+          <span class="node-icon">🏆</span>
+          <span class="node-kanji">記録</span>
+          <span class="node-label">Highest Score</span>
+        </button>
+
+        <button class="launcher-hub" id="play-btn">
+          <span class="hub-ring ring-1"></span>
+          <span class="hub-ring ring-2"></span>
+          <span class="hub-label">PLAY</span>
+        </button>
+
+        <button class="launcher-node node-bl" id="streak-btn">
+          <span class="node-icon">🔥</span>
+          <span class="node-kanji">連続</span>
+          <span class="node-label">3-Day Streak</span>
+        </button>
+
+        <button class="launcher-node node-br" id="achievements-btn">
+          <span class="node-icon">🎖️</span>
+          <span class="node-kanji">実績</span>
+          <span class="node-label">Achievements</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- LEVEL SELECT MODAL (hidden by default) -->
+    <div id="levelSelectModal" style="display:none; position:fixed; inset:0; background:rgba(10,12,16,0.85); backdrop-filter:blur(4px); z-index:1000; align-items:center; justify-content:center;">
+      <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:40px; text-align:center; max-width:600px;">
+        <h2 style="font-family:var(--font-display); font-size:28px; margin-bottom:24px;">Choose your level</h2>
+        <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:14px;">
+          <div class="level-card" style="cursor:pointer;" onclick="loadGame('N5')"><div class="badge">N5</div><h4>Beginner</h4></div>
+          <div class="level-card" style="cursor:pointer;" onclick="loadGame('N4')"><div class="badge">N4</div><h4>Elementary</h4></div>
+          <div class="level-card" style="cursor:pointer;" onclick="loadGame('N3')"><div class="badge">N3</div><h4>Intermediate</h4></div>
+          <div class="level-card" style="cursor:pointer;" onclick="loadGame('N2')"><div class="badge">N2</div><h4>Upper-int.</h4></div>
+          <div class="level-card" style="cursor:pointer;" onclick="loadGame('N1')"><div class="badge">N1</div><h4>Advanced</h4></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME UI (hidden until a level is selected) -->
+    <div id="gameUI" style="display:none; padding:40px; text-align:center;">
+      <h2 style="font-family:var(--font-display); margin-bottom:20px;">Level: <span id="selectedLevel">N5</span></h2>
+      <p style="color:var(--text-secondary); margin-bottom:30px;">[Your kanji/vocab practice cards render here — call your fetch logic to load data/kanji/[level].json]</p>
+      <button class="btn btn-ghost" onclick="goBackToDashboard()" style="margin-top:20px;">← Back to Dashboard</button>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+       RIGHT RAIL
+       ============================================================ -->
+  <aside class="right-rail">
+    <div class="mascot-card placeholder">
+      <div class="mascot-head"><span>[MASCOT NAME]</span><span class="lvl-badge">Lvl 0</span></div>
+      <div class="mascot-stat">0 / 25 correct</div>
+      <div class="mascot-scene"></div>
+    </div>
+
+    <div class="quick-practice-card">
+      <h3>Quick Practice</h3>
+      <p>5 random cards from your weakest deck.</p>
+      <button class="btn btn-primary" id="quick-practice-btn">Start</button>
+    </div>
+  </aside>
+
+</div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
