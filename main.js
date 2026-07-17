@@ -4,9 +4,8 @@ const gameUI = document.getElementById('gameUI');
 
 document.querySelectorAll('.get-started-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    landing.style.display = 'none';
-    levelSelect.style.display = 'block';
-    window.scrollTo(0, 0);
+    // Redirect to dashboard.html
+    window.location.href = 'dashboard.html';
   });
 });
 
@@ -14,7 +13,6 @@ function loadGame(level) {
   console.log("Selected level: " + level);
   levelSelect.style.display = 'none';
   gameUI.style.display = 'block';
-  window.scrollTo(0, 0);
   // Here you would trigger your fetch logic, e.g.:
   // fetch(`data/kanji/${level}.json`).then(res => res.json()).then(renderDeck);
 }
