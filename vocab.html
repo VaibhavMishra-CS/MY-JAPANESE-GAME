@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[YOUR GAME NAME] — Vocab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="dashboard.css">
+<link rel="stylesheet" href="vocab.css">
+</head>
+<body class="dashboard-body">
+
+<div class="app-shell">
+
+  <!-- SIDEBAR (same as dashboard.html) -->
+  <aside class="sidebar">
+    <div class="sidebar-logo"><span class="mark">語</span> <span class="placeholder">[YOUR GAME NAME]</span></div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-item" href="dashboard.html"><span class="nav-icon">🏠</span> Home</a>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Learn</div>
+        <a class="nav-item" href="books.html"><span class="nav-icon">📚</span> Books</a>
+        <a class="nav-item" href="grammar.html"><span class="nav-icon">文</span> Grammar</a>
+        <a class="nav-item" id="nav-vocab" href="vocab.html?mode=vocab"><span class="nav-icon">言</span> Vocab</a>
+        <a class="nav-item" id="nav-kanji" href="vocab.html?mode=kanji"><span class="nav-icon">字</span> Kanji</a>
+        <a class="nav-item" href="reading.html"><span class="nav-icon">📖</span> Reading</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Practice</div>
+        <a class="nav-item" href="#"><span class="nav-icon">📝</span> Mocks</a>
+        <a class="nav-item" href="#"><span class="nav-icon">🔁</span> Review</a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Progress</div>
+        <a class="nav-item" href="#"><span class="nav-icon">📊</span> Stats</a>
+        <a class="nav-item" href="#"><span class="nav-icon">📈</span> Tracker</a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-card">
+        <div class="avatar"></div>
+        <div>
+          <div class="user-name placeholder">[USERNAME]</div>
+          <div class="user-plan">Free</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="dashboard-main">
+
+    <!-- GRID VIEW (word list + simple filter bar) -->
+    <div id="grid-view">
+      <div class="vocab-tabs">
+        <button class="vocab-tab active" id="tab-vocab">Vocabulary</button>
+        <button class="vocab-tab" id="tab-kanji">Kanji</button>
+      </div>
+
+      <div class="vocab-header">
+        <div class="vocab-header-left">
+          <h2 id="list-title">Vocab List</h2>
+          <span class="word-count-pill" id="total-word-count">0 words</span>
+        </div>
+        <input type="text" class="vocab-search" id="vocab-search" placeholder="Search...">
+      </div>
+
+      <div class="filter-bar">
+        <select class="filter-select" id="filter-status">
+          <option value="all">All Words</option>
+          <option value="mastered">Mastered</option>
+          <option value="missed">Missed</option>
+          <option value="new">New</option>
+        </select>
+
+        <select class="filter-select" id="filter-level">
+          <option value="all">All Levels</option>
+          <option value="N5">N5</option>
+          <option value="N4">N4</option>
+          <option value="N3">N3</option>
+          <option value="N2">N2</option>
+          <option value="N1">N1</option>
+        </select>
+
+        <label class="filter-checkbox">
+          <input type="checkbox" id="filter-flagged"> Flagged
+        </label>
+      </div>
+
+      <div class="word-grid" id="word-grid"></div>
+
+      <div class="pagination">
+        <button id="prev-page">Previous</button>
+        <span id="page-label">Page 1 of 1</span>
+        <button id="next-page">Next</button>
+      </div>
+    </div>
+
+    <!-- DETAIL VIEW (Cards or Scroll, entered by clicking a word) -->
+    <div id="detail-view" style="display:none;">
+      <div class="detail-toolbar">
+        <div class="view-toggle">
+          <button class="active" id="view-cards-btn">☐ Cards</button>
+          <button id="view-scroll-btn">☰ Scroll</button>
+        </div>
+        <div class="detail-toolbar-right">
+          <div class="filters-btn-wrap">
+            <button class="btn btn-ghost" id="filters-btn">▽ Filters</button>
+            <div class="filters-modal" id="filters-modal">
+              <div class="field-label">Status</div>
+              <select class="filter-select" id="filter-status-modal">
+                <option value="all">All Words</option>
+                <option value="mastered">Mastered</option>
+                <option value="missed">Missed</option>
+                <option value="new">New</option>
+              </select>
+              <div class="field-label">Difficulty</div>
+              <select class="filter-select" id="filter-level-modal">
+                <option value="all">All Levels</option>
+                <option value="N5">N5</option>
+                <option value="N4">N4</option>
+                <option value="N3">N3</option>
+                <option value="N2">N2</option>
+                <option value="N1">N1</option>
+              </select>
+              <label class="filter-checkbox" style="width:100%; box-sizing:border-box;">
+                <input type="checkbox" id="filter-flagged-modal"> Flagged only
+              </label>
+            </div>
+          </div>
+          <button class="btn btn-ghost" id="exit-detail-btn">✕ Exit</button>
+        </div>
+      </div>
+
+      <!-- CARDS sub-view -->
+      <div id="flashcard-view" class="flashcard-view">
+        <div class="flashcard-stage">
+          <button class="flashcard-nav-btn" id="prev-word-btn">‹</button>
+
+          <div class="flashcard-card" id="flashcard-card">
+            <div class="card-top-row">
+              <span class="card-level-badge" id="card-level-badge">N5</span>
+              <span class="card-position" id="card-position">Word 1 of 1</span>
+              <button class="flag-btn" id="flag-btn">🔖</button>
+            </div>
+
+            <div class="card-word-block">
+              <div class="card-word" id="card-word">word</div>
+              <div class="card-reading" id="card-reading"></div>
+            </div>
+
+            <div class="card-section-label">Meaning</div>
+            <div class="card-meaning" id="card-meaning"></div>
+
+            <div class="examples-tile" id="examples-tile">
+              <div class="card-section-label">Examples</div>
+              <div id="examples-list"></div>
+            </div>
+
+            <div class="card-bottom-row">
+              <button class="know-word-btn" id="know-word-btn">✓ I know this word</button>
+            </div>
+          </div>
+
+          <div class="kanji-side-panel" id="kanji-side-panel">
+            <h4>Onyomi</h4>
+            <div class="reading-value" id="side-onyomi">—</div>
+            <h4>Kunyomi</h4>
+            <div class="reading-value" id="side-kunyomi">—</div>
+          </div>
+
+          <button class="flashcard-nav-btn" id="next-word-btn">›</button>
+        </div>
+      </div>
+
+      <!-- SCROLL sub-view -->
+      <div id="scroll-view" class="scroll-view">
+        <div class="scroll-count" id="scroll-count">0 of 0 words</div>
+        <div id="scroll-list"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- RIGHT RAIL -->
+  <aside class="right-rail">
+    <div class="daily-goal-card">
+      <div class="head">
+        <span id="goal-title">Daily Vocab Goal</span>
+        <button class="edit-toggle" id="goal-edit-toggle">✎</button>
+      </div>
+
+      <div class="goal-display" id="goal-display">
+        <div class="progress-ring">
+          <svg viewBox="0 0 100 100">
+            <circle class="ring-bg" cx="50" cy="50" r="42"></circle>
+            <circle class="ring-fg" id="goal-ring-fg" cx="50" cy="50" r="42"></circle>
+          </svg>
+          <div class="ring-label">
+            <span class="ring-num" id="goal-count">0</span>
+            <span class="ring-total" id="goal-total">/15</span>
+          </div>
+        </div>
+        <div class="goal-meta">
+          <div class="studied-label" id="goal-studied-label">Vocab Studied</div>
+          <div class="remaining-label" id="goal-remaining">100% remaining</div>
+        </div>
+      </div>
+
+      <div class="goal-edit" id="goal-edit">
+        <input type="number" id="goal-input" min="1" value="15">
+        <div class="unit-label" id="goal-unit-label">vocab / day</div>
+      </div>
+    </div>
+
+    <div class="coming-soon-card">
+      <div class="icon">🎮</div>
+      <h4>Game Coming Soon</h4>
+      <p>A new way to practice is on the way.</p>
+    </div>
+  </aside>
+
+</div>
+
+<script src="vocab.js"></script>
+</body>
+</html>
