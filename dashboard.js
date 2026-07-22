@@ -1,73 +1,89 @@
-// ==========================================================================
-// DAILY GOAL RING
-// ==========================================================================
-function setDailyGoalProgress(done, total) {
-  const ring = document.getElementById('daily-goal-ring');
-  const num = document.getElementById('daily-goal-num');
-  const circumference = 2 * Math.PI * 42;
-  const pct = Math.min(done / total, 1);
-  ring.style.strokeDasharray = circumference;
-  ring.style.strokeDashoffset = circumference * (1 - pct);
-  num.textContent = done;
+// dashboard.js / modules.js
+// Firestore replacement for localStorage.getItem/setItem
+// All reads/writes are scoped to the logged-in user's uid
+
+import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import { auth, requireAuth, renderAuthUI } from "./auth.js";
+
+const db = getFirestore();
+
+// ---- Internal helper: get current user or throw ----
+function requireUser() {
+  const user = auth.currentUser;
+  if (!user) {
+    throw new Error("No user is signed in. Cannot read/write user data.");
+  }
+  return user;
+}
+
+// ---- Replacement for localStorage.setItem(key, value) ----
+// Stores a single field inside the user's document: users/{uid}
+export async function setUserItem(key, value) {
+  const user = requireUser();
+  const userRef = doc(db, "users", user.uid);
+  await setDoc(userRef, { [key]: value }, { merge: true });
+}
+
+// ---- Replacement for localStorage.getItem(key) ----
+export async function getUserItem(key) {
+  const user = requireUser();
+  const userRef = doc(db, "users", user.uid);
+  const snap = await getDoc(userRef);
+  if (!snap.exists()) return null;
+  return snap.data()[key] ?? null;
+}
+
+// ---- Get the user's entire data object at once ----
+// Useful on dashboard load instead of many separate getItem calls
+export async function getUserData() {
+  const user = requireUser();
+  const userRef = doc(db, "users", user.uid);
+  const snap = await getDoc(userRef);
+  return snap.exists() ? snap.data() : {};
+}
+
+// ---- Update multiple fields at once ----
+// Replacement for a batch of setItem calls, e.g. saving game progress
+export async function updateUserData(fields) {
+  const user = requireUser();
+  const userRef = doc(db, "users", user.uid);
+  await setDoc(userRef, fields, { merge: true });
+}
+
+// ---- Example: save game progress ----
+export async function saveProgress(level, score) {
+  await updateUserData({
+    lastLevel: level,
+    lastScore: score,
+    updatedAt: Date.now()
+  });
+}
+
+// ---- Example: load game progress on dashboard init ----
+export async function loadDashboard() {
+  const data = await getUserData();
+  return {
+    level: data.lastLevel ?? 1,
+    score: data.lastScore ?? 0,
+    settings: data.settings ?? {}
+  };
 }
 
 // ==========================================================================
-// GAME LAUNCHER — PLAY button opens level select modal
+// PAGE INIT — this is what was missing. dashboard.html only loads this
+// file, so this file (not modules.js) has to be the one enforcing login
+// and hiding the loading overlay on THIS page.
 // ==========================================================================
-document.getElementById('play-btn').addEventListener('click', () => {
-  document.getElementById('levelSelectModal').style.display = 'flex';
+document.addEventListener('DOMContentLoaded', async () => {
+  // Blocks here until login is confirmed; redirects to index.html and
+  // never resolves if no user is signed in.
+  await requireAuth('index.html');
+
+  // Wire up the sidebar user card with the logged-in user's name/email
+  // and the account switch/logout menu.
+  renderAuthUI();
+
+  // Safe to reveal the page now
+  const overlay = document.getElementById('auth-loading-overlay');
+  if (overlay) overlay.style.display = 'none';
 });
-
-document.getElementById('previous-games-btn').addEventListener('click', () => {
-  console.log('Previous Games pressed');
-});
-
-document.getElementById('highscore-btn').addEventListener('click', () => {
-  console.log('Highest Score pressed');
-});
-
-document.getElementById('streak-btn').addEventListener('click', () => {
-  console.log('Streak pressed');
-});
-
-document.getElementById('achievements-btn').addEventListener('click', () => {
-  console.log('Achievements pressed');
-});
-
-document.getElementById('quick-practice-btn').addEventListener('click', () => {
-  console.log('Quick Practice pressed');
-});
-
-// ==========================================================================
-// LEVEL SELECT → GAME UI
-// ==========================================================================
-function loadGame(level) {
-  console.log('Selected level: ' + level);
-
-  // Hide modal
-  document.getElementById('levelSelectModal').style.display = 'none';
-
-  // Hide only the dashboard's own sections — NOT the whole .dashboard-main,
-  // since gameUI lives inside .dashboard-main and would get hidden with it
-  document.querySelector('.top-row').style.display = 'none';
-  document.querySelector('.game-launcher').style.display = 'none';
-  document.querySelector('.right-rail').style.display = 'none';
-
-  // Show game UI and set level
-  document.getElementById('gameUI').style.display = 'block';
-  document.getElementById('selectedLevel').textContent = level;
-
-  // HERE: Call your existing fetch logic to load kanji/vocab data
-  // Example:
-  // fetch(`data/kanji/${level}.json`)
-  //   .then(res => res.json())
-  //   .then(data => renderGameCards(data));
-}
-
-function goBackToDashboard() {
-  // Hide game UI, restore dashboard sections
-  document.getElementById('gameUI').style.display = 'none';
-  document.querySelector('.top-row').style.display = 'grid';
-  document.querySelector('.game-launcher').style.display = 'block';
-  document.querySelector('.right-rail').style.display = 'flex';
-}

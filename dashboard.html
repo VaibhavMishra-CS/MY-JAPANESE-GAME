@@ -20,39 +20,40 @@
     <div class="sidebar-logo"><span class="mark">語</span> <span class="placeholder">INSPARKS</span></div>
 
     <nav class="sidebar-nav">
-      <a class="nav-item active" href="#"><span class="nav-icon">🏠</span> Home</a>
+      <a class="nav-item active" href="dashboard.html"><span class="nav-icon">🏠</span> Home</a>
 
       <div class="nav-group">
         <div class="nav-group-label">Learn</div>
-        <a class="nav-item" href="#"><span class="nav-icon">📦</span> Modules</a>
-        <a class="nav-item" href="#"><span class="nav-icon">文</span> Grammar</a>
+        <a class="nav-item" href="modules.html"><span class="nav-icon">📚</span> Books</a>
+        <a class="nav-item" href="grammar.html"><span class="nav-icon">文</span> Grammar</a>
         <a class="nav-item" href="vocab.html"><span class="nav-icon">言</span> Vocab</a>
-        <a class="nav-item" href="vocab.html"><span class="nav-icon">字</span> Kanji</a>
-        <a class="nav-item" href="#"><span class="nav-icon">📖</span> Reading</a>
+        <a class="nav-item" href="kanji.html"><span class="nav-icon">字</span> Kanji</a>
+        <a class="nav-item" href="reading.html"><span class="nav-icon">📖</span> Reading</a>
       </div>
 
       <div class="nav-group">
         <div class="nav-group-label">Practice</div>
-        <a class="nav-item" href="#"><span class="nav-icon">📝</span> Mocks</a>
-        <a class="nav-item" href="#"><span class="nav-icon">🔁</span> Review</a>
+        <a class="nav-item" href="mocks.html"><span class="nav-icon">📝</span> Mocks</a>
+        <a class="nav-item" href="review.html"><span class="nav-icon">🔁</span> Review</a>
       </div>
 
       <div class="nav-group">
         <div class="nav-group-label">Progress</div>
-        <a class="nav-item" href="#"><span class="nav-icon">📊</span> Stats</a>
-        <a class="nav-item" href="#"><span class="nav-icon">📈</span> Tracker</a>
+        <a class="nav-item" href="stats.html"><span class="nav-icon">📊</span> Stats</a>
+        <a class="nav-item" href="tracker.html"><span class="nav-icon">📈</span> Tracker</a>
       </div>
     </nav>
 
     <div class="sidebar-footer">
-      <div class="user-card">
-        <div class="avatar"></div>
-        <div>
-          <div class="user-name placeholder">[USERNAME]</div>
-          <div class="user-plan">Free</div>
-        </div>
+    <div class="user-card" id="user-card-btn">
+     <div class="avatar" id="user-avatar"></div>
+      <div>
+       <div class="user-name" id="user-name">[USERNAME]</div>
+        <div class="user-plan" id="user-email">Free</div>
       </div>
     </div>
+    <div id="user-menu"></div>
+  </div>
   </aside>
 
   <!-- ============================================================
@@ -89,7 +90,6 @@
 
     <!-- ============================================================
          GAME LAUNCHER — shoji-paper panel (warm/light contrast)
-         Replaces crackd's "Study Plan" section.
          ============================================================ -->
     <section class="game-launcher">
       <div class="shoji-bg" aria-hidden="true"></div>
@@ -128,7 +128,7 @@
     </section>
 
     <!-- LEVEL SELECT MODAL (hidden by default) -->
-    <div id="levelSelectModal" style="display:none; position:fixed; inset:0; background:rgba(10,12,16,0.85); backdrop-filter:blur(4px); z-index:1000; align-items:center; justify-content:center;">
+    <div id="levelSelectModal" style="display:none; position:fixed; inset:0; background:rgba(13,11,20,0.85); backdrop-filter:blur(4px); z-index:1000; align-items:center; justify-content:center;">
       <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:40px; text-align:center; max-width:600px;">
         <h2 style="font-family:var(--font-display); font-size:28px; margin-bottom:24px;">Choose your level</h2>
         <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:14px;">
@@ -169,6 +169,6 @@
 
 </div>
 
-<script src="dashboard.js"></script>
+<script type="module" src="dashboard.js"></script>
 </body>
 </html>
